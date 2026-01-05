@@ -37,8 +37,12 @@ const Home = () => {
   }
 
   useEffect(() => {
-      document.title = "Shri Siddheshwar Shiv Mandir";
-    }, []);
+    document.title = "Shri Siddheshwar Shiv Mandir";
+    galleryImages.forEach(src => {
+      const img = new Image()
+      img.src = src
+    })
+  }, []);
   return (
     <div className="home">
 
@@ -86,7 +90,7 @@ const Home = () => {
         <div className="split-text">
           <h2>Historical Legacy & Spiritual Significance</h2>
           <p>
-              In 1925, a rare and grand Rudra Mahayagya was organized at Teertheshwar, Himachal Pradesh, becoming a landmark event in the spiritual history of Sanatan Dharma. Performed with strict adherence to Vedic scriptures and collective participation of saints, scholars, and thousands of devotees, the Mahayagya was undertaken for Lok Kalyan (universal welfare), spiritual purification, and harmony between humanity and nature. Its scale, discipline, and devotion left a lasting imprint on generations to come.       
+            In 1925, a rare and grand Rudra Mahayagya was organized at Teertheshwar, Himachal Pradesh, becoming a landmark event in the spiritual history of Sanatan Dharma. Performed with strict adherence to Vedic scriptures and collective participation of saints, scholars, and thousands of devotees, the Mahayagya was undertaken for Lok Kalyan (universal welfare), spiritual purification, and harmony between humanity and nature. Its scale, discipline, and devotion left a lasting imprint on generations to come.
           </p>
           <p>
             Spiritually, such Mahayagyas are believed to purify the environment, dispel negative energies, and invoke divine blessings for peace and societal well-being. The legacy of the 1925 Teertheshwar Mahayagya continues to inspire modern sacred initiatives, including the 1101 Kund Shri Mahayagya, preserving the continuity and timeless wisdom of Vedic traditions.

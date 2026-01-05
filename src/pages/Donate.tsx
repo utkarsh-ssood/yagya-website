@@ -15,8 +15,17 @@ const upi: UPI = {
 };
 
 const Donate = () => {
-
   const [copied, setCopied] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile device
+  useEffect(() => {
+    const mobile =
+      /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(
+        navigator.userAgent
+      );
+    setIsMobile(mobile);
+  }, []);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(upi.id).then(() => {
@@ -24,9 +33,22 @@ const Donate = () => {
       setTimeout(() => setCopied(false), 1500);
     });
   };
+
+  // Open UPI app only on mobile
+  const handleUPIClick = () => {
+    if (!isMobile) return;
+
+    const upiLink = `upi://pay?pa=${encodeURIComponent(
+      upi.id
+    )}&pn=${encodeURIComponent(upi.name)}&cu=INR`;
+
+    console.log("DEBUG: Opening UPI link:", upiLink);
+    window.location.href = upiLink;
+  };
+
   useEffect(() => {
-      document.title = "Donate - Shri Siddheshwar Shiv Mandir";
-    }, []);
+    document.title = "Donate - Shri Siddheshwar Shiv Mandir";
+  }, []);
 
   return (
     <div className="donate-page">
@@ -39,9 +61,17 @@ const Donate = () => {
         <h2>UPI Payment</h2>
 
         <div className="upi-highlight">
-          <div className="upi-qr">
+          {/* QR / Tap area */}
+          <div
+            className={`upi-qr ${isMobile ? "clickable" : ""}`}
+            onClick={handleUPIClick}
+            role={isMobile ? "button" : undefined}
+            tabIndex={isMobile ? 0 : -1}
+          >
             <img src={upi.qr} alt="UPI QR Code" />
-            <span>Scan to Donate</span>
+            <span>
+              {isMobile ? "Tap to open UPI app" : "Scan to Donate"}
+            </span>
           </div>
 
           <div className="upi-info">
@@ -55,27 +85,29 @@ const Donate = () => {
             <div className="upi-pill" onClick={handleCopy}>
               <span>{upi.id}</span>
               <svg
-  xmlns="http://www.w3.org/2000/svg"
-  fill="none"
-  viewBox="0 0 24 24"
-  stroke="currentColor"
->
-  <path
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth={2}
-    d="M9 5h6a2 2 0 012 2v12a2 2 0 01-2 2H9a2 2 0 01-2-2V7a2 2 0 012-2z"
-  />
-  <path
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth={2}
-    d="M9 5a3 3 0 006 0"
-  />
-</svg>
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5h6a2 2 0 012 2v12a2 2 0 01-2 2H9a2 2 0 01-2-2V7a2 2 0 012-2z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5a3 3 0 006 0"
+                />
+              </svg>
             </div>
 
-            <span className={`copied ${copied ? "show" : ""}`}>Copied to Clipboard!</span>
+            <span className={`copied ${copied ? "show" : ""}`}>
+              Copied to Clipboard!
+            </span>
           </div>
         </div>
       </section>

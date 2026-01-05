@@ -55,20 +55,24 @@ const Donate = () => {
             <div className="upi-pill" onClick={handleCopy}>
               <span>{upi.id}</span>
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                width={20}
-                height={20}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 16h8M8 12h8m-8-4h8"
-                />
-              </svg>
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  viewBox="0 0 24 24"
+  stroke="currentColor"
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={2}
+    d="M9 5h6a2 2 0 012 2v12a2 2 0 01-2 2H9a2 2 0 01-2-2V7a2 2 0 012-2z"
+  />
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={2}
+    d="M9 5a3 3 0 006 0"
+  />
+</svg>
             </div>
 
             <span className={`copied ${copied ? "show" : ""}`}>Copied!</span>

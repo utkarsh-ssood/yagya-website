@@ -1,0 +1,155 @@
+/* ===============================
+   ABOUT PAGE – POLISHED & ALIGNED
+================================ */
+
+.about-page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 20px 64px;
+  background: transparent;
+}
+
+/* ===============================
+   PAGE TITLE
+================================ */
+
+.about-page h1 {
+  text-align: center;
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 36px;
+  position: relative;
+}
+
+.about-page h1::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 3px;
+  background: var(--primary);
+  margin: 14px auto 0;
+  border-radius: 2px;
+}
+
+/* ===============================
+   CONTENT BLOCK
+================================ */
+
+.about-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 36px 28px;
+}
+
+/* ===============================
+   SECTIONS
+================================ */
+
+.about-section {
+  margin-bottom: 32px;
+}
+
+.about-section:last-child {
+  margin-bottom: 0;
+}
+
+/* SECTION HEADINGS */
+.about-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 14px;
+  line-height: 1.3;
+}
+
+.about-section h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 1.1em;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+/* PARAGRAPHS */
+.about-section p {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+/* ===============================
+   LIST STYLING
+================================ */
+
+.about-section ul {
+  margin-top: 12px;
+  padding-left: 20px;
+}
+
+.about-section ul li {
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+/* Custom bullet */
+.about-section ul li::marker {
+  color: var(--primary);
+}
+
+/* ===============================
+   RESPONSIVE – MOBILE
+================================ */
+
+@media (max-width: 480px) {
+  .about-page {
+    padding: 36px 14px 48px;
+  }
+
+  .about-content {
+    padding: 26px 18px;
+  }
+
+  .about-page h1 {
+    font-size: 26px;
+    margin-bottom: 28px;
+  }
+
+  .about-section h2 {
+    font-size: 18px;
+  }
+
+  .about-section p,
+  .about-section ul li {
+    font-size: 14.5px;
+  }
+}
+
+/* ===============================
+   RESPONSIVE – DESKTOP
+================================ */
+
+@media (min-width: 768px) {
+  .about-content {
+    padding: 44px 42px;
+  }
+
+  .about-section h2 {
+    font-size: 21px;
+  }
+
+  .about-section p,
+  .about-section ul li {
+    font-size: 16px;
+  }
+}

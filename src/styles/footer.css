@@ -1,0 +1,148 @@
+/* ===============================
+   FOOTER
+================================ */
+.footer {
+  background: #fff7f0; /* soft warm background */
+  padding: 2rem 1rem;
+  border-top: 1px solid rgba(255, 122, 24, 0.15);
+  overflow-x: hidden; /* prevents sideways scroll */
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* ===============================
+   BRAND / DESCRIPTION
+================================ */
+.footer-brand {
+  flex: 1;
+  min-width: 240px;
+}
+
+.footer-brand h3 {
+  color: #ff7a18;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.footer-brand p {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ===============================
+   FOOTER LINKS
+================================ */
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 160px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #444;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #ff7a18;
+}
+
+/* ===============================
+   SOCIAL ICONS
+================================ */
+.footer-socials {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+.footer-socials a {
+  font-size: 1.5rem;
+  color: #ff7a18;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.footer-socials a:hover {
+  transform: scale(1.1);
+  color: #ff9f4d;
+}
+
+/* ===============================
+   COPYRIGHT
+================================ */
+.footer-bottom {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: #777;
+}
+
+/* ===============================
+   MOBILE OPTIMIZATION
+================================ */
+@media (max-width: 768px) {
+  .footer {
+    padding: 1.5rem 1rem;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.1rem; /* reduced vertical gap */
+  }
+
+  .footer-brand {
+    max-width: 420px;
+  }
+
+  .footer-brand p {
+    margin-bottom: 0.4rem; /* reduce text → links gap */
+  }
+
+  .footer-links {
+    gap: 0.45rem; /* tighter links */
+  }
+
+  .footer-socials {
+    justify-content: center;
+    margin-top: 0.3rem;
+  }
+
+  .footer-bottom {
+    margin-top: 1rem;
+  }
+}
+
+/* ===============================
+   EXTRA SMALL DEVICES
+================================ */
+@media (max-width: 480px) {
+  .footer-brand h3 {
+    font-size: 1.25rem;
+  }
+
+  .footer-brand p,
+  .footer-links a {
+    font-size: 0.9rem;
+  }
+
+  .footer-socials a {
+    font-size: 1.4rem;
+  }
+}

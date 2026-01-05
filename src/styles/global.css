@@ -1,0 +1,230 @@
+/* =========================
+   THEME VARIABLES
+========================= */
+:root {
+  --bg-main: #fffdf8;
+  --bg-soft: #f9f6ef;
+  --bg-card: #ffffff;
+
+  --primary: #c97b00;        /* Saffron */
+  --primary-soft: #f3e6cf;
+  --secondary: #7a4a00;
+
+  --text-main: #2a2a2a;
+  --text-muted: #6b6b6b;
+
+  --border-light: #e6dfd2;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  --shadow-soft: 0 4px 14px rgba(0, 0, 0, 0.06);
+
+  --max-width: 1200px;
+}
+
+/* =========================
+   RESET & BASE
+========================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  line-height: 1.65;
+}
+
+/* =========================
+   PAGE CONTAINER
+========================= */
+.page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+h1 {
+  font-size: clamp(26px, 5vw, 38px);
+  margin-bottom: 14px;
+  color: var(--secondary);
+}
+
+h2 {
+  font-size: clamp(22px, 4.5vw, 30px);
+  margin-bottom: 12px;
+  color: var(--secondary);
+}
+
+h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: var(--text-main);
+}
+
+p {
+  font-size: 15.5px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   SECTION BLOCK
+========================= */
+.section {
+  margin-bottom: 64px;
+}
+
+.section.soft {
+  background: var(--bg-soft);
+  padding: 32px 20px;
+  border-radius: var(--radius-lg);
+}
+
+/* =========================
+   CARDS
+========================= */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.card.shadow {
+  box-shadow: var(--shadow-soft);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  font-size: 15px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn.primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn.primary:hover {
+  background: #b36d00;
+}
+
+.btn.outline {
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+.btn.outline:hover {
+  background: var(--primary-soft);
+}
+
+/* =========================
+   TABLE (Donate Page)
+========================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+th,
+td {
+  padding: 12px;
+  border: 1px solid var(--border-light);
+  text-align: left;
+}
+
+th {
+  background: var(--primary-soft);
+  font-weight: 600;
+}
+
+/* =========================
+   IMAGE HANDLING (GLOBAL)
+========================= */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .page {
+    padding: 24px 14px 48px;
+  }
+
+  .section {
+    margin-bottom: 48px;
+  }
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Prevent small swipes/scrolls from revealing off-canvas content */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Off-canvas mobile nav — closed by default, non-interactive */
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 280px;                /* adjust as needed */
+  transform: translateX(-100%);/* fully hidden offscreen */
+  transition: transform 0.28s ease;
+  z-index: 1200;
+  background: var(--bg-card);
+  box-shadow: 0 6px 30px rgba(0,0,0,0.12);
+  pointer-events: none;        /* prevents accidental interaction when closed */
+}
+
+/* When menu is open toggle this class (e.g. add .open) */
+.mobile-nav.open {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* Prevent body scroll when nav is open */
+body.nav-open {
+  overflow: hidden;
+}

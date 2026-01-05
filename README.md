@@ -1,73 +1,42 @@
-# React + TypeScript + Vite
+# Yagya Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains the source code for the **Yagya Website**, a React-based web application built with TypeScript and Vite. The website is designed to provide information about the **Shri Siddheshwar Shiv Mandir** and its activities, including the **1101 Kundiya Rudra Maha Yagya**.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Responsive Design**: Fully responsive layout for mobile, tablet, and desktop devices.
+- **Dynamic Navbar**: Hamburger menu with scroll lock and overlay functionality.
+- **Pages**:
+  - **Home**: Highlights the Maha Yagya and its significance.
+  - **About**: Provides detailed information about the temple and its mission.
+  - **Donate**: Allows users to donate via UPI with a copy-to-clipboard feature.
+  - **Trustees**: Displays a list of trustees with their roles and contact information.
+  - **Contact**: Contact form for inquiries and feedback.
+- **Image Gallery**: Dynamic image carousel with swipe functionality.
+- **Dark/Light Theme Support**: Adjusts based on the user's system preferences.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend**: React, TypeScript
+- **Build Tool**: Vite
+- **Styling**: CSS Modules, custom global styles
+- **Routing**: React Router
+- **State Management**: React Hooks
 
-## Expanding the ESLint configuration
+## Folder Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+```plaintext
+yagya-website/
+├── public/                 # Static assets
+├── src/                    # Source code
+│   ├── assets/             # Images and other media
+│   ├── components/         # Reusable components (e.g., Navbar, Footer)
+│   ├── data/               # Static data (e.g., trustees.ts)
+│   ├── pages/              # Page components (e.g., Home, About, Donate)
+│   ├── styles/             # Global and page-specific styles
+│   ├── App.tsx             # Root component
+│   ├── main.tsx            # Entry point
+│   └── [index.html](http://_vscodecontentref_/0)          # HTML template
+├── [tsconfig.json](http://_vscodecontentref_/1)           # TypeScript configuration
+├── [vite.config.ts](http://_vscodecontentref_/2)          # Vite configuration
+└── [package.json](http://_vscodecontentref_/3)            # Project metadata and dependencies

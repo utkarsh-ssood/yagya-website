@@ -75,7 +75,7 @@ const Donate = () => {
 </svg>
             </div>
 
-            <span className={`copied ${copied ? "show" : ""}`}>Copied!</span>
+            <span className={`copied ${copied ? "show" : ""}`}>Copied to Clipboard!</span>
           </div>
         </div>
       </section>

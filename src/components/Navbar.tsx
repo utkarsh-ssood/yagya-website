@@ -13,7 +13,6 @@ const Navbar = () => {
   // ==============================
   useEffect(() => {
     if (open) {
-      // Lock scroll
       scrollYRef.current = window.scrollY || window.pageYOffset || 0;
       document.body.style.position = "fixed";
       document.body.style.top = `-${scrollYRef.current}px`;
@@ -22,7 +21,6 @@ const Navbar = () => {
       document.body.style.overflow = "hidden";
       document.body.classList.add("nav-open");
     } else {
-      // Restore scroll
       document.body.style.position = "";
       document.body.style.top = "";
       document.body.style.left = "";
@@ -32,7 +30,6 @@ const Navbar = () => {
       window.scrollTo(0, scrollYRef.current);
     }
 
-    // Close menu on Escape
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
@@ -57,10 +54,8 @@ const Navbar = () => {
 
     const onPointerDown = (e: PointerEvent) => {
       const target = e.target as Node | null;
-
       if (!navLinksRef.current || !hamburgerRef.current) return;
 
-      // Close only if click is outside nav-links and hamburger
       if (
         !navLinksRef.current.contains(target) &&
         !hamburgerRef.current.contains(target)
@@ -74,11 +69,17 @@ const Navbar = () => {
   }, [open]);
 
   return (
-    <nav className="navbar" aria-hidden={false}>
-      {/* Brand */}
-      <div className="nav-brand">
-        Shri Siddheshwar Shiv Mandir Charitable Trust (Regd)
-      </div>
+    <nav className="navbar">
+      {/* Brand → Home */}
+      <Link
+        to="/"
+        className="nav-brand"
+        onClick={() => setOpen(false)}
+        aria-label="Go to Home"
+        style={{ textDecoration: "none" }}
+      >
+        Shri Siddheshwar Shiv Mandir Charitable Trust (Regd.)
+      </Link>
 
       {/* Links */}
       <div ref={navLinksRef} className={`nav-links ${open ? "open" : ""}`}>
@@ -88,7 +89,6 @@ const Navbar = () => {
         <Link to="/about" className="nav-link" onClick={() => setOpen(false)}>
           About
         </Link>
-        {/* <Link to="/trustees" className="nav-link" onClick={() => setOpen(false)}>Trustees</Link> */}
         <Link
           to="/register"
           className="donate-btn"
@@ -109,7 +109,8 @@ const Navbar = () => {
       <div
         ref={hamburgerRef}
         className="hamburger"
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => setOpen(prev => !prev)}
+        aria-label="Toggle navigation menu"
       >
         ☰
       </div>

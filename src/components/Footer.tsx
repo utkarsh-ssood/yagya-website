@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
 
         {/* Left */}
         <div className="footer-brand">
-          <h3>Shri Siddheshwar Shiv Mandir Charitable Trust (Regd)</h3>
+          <h3>Shri Siddheshwar Shiv Mandir Charitable Trust (Regd.)</h3>
           <p>Dedicated to service, devotion, and community welfare.</p>
         </div>
 
@@ -53,7 +53,7 @@ const Footer: React.FC = () => {
       </div>
 
       <div className="footer-bottom">
-        © {new Date().getFullYear()} Shri Siddheshwar Shiv Mandir Charitable Trust (Regd). All rights reserved.
+        © {new Date().getFullYear()} Shri Siddheshwar Shiv Mandir Charitable Trust (Regd.). All rights reserved.
       </div>
     </footer>
   );

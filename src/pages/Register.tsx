@@ -133,7 +133,7 @@ const Register = () => {
   };
 
   useEffect(() => {
-    document.title = "Register - Shri Siddheshwar Shiv Mandir";
+    document.title = "Register - Shri Sidheshwar Shiv Mandir";
   }, []);
   return (
     <div className="page">

@@ -5,7 +5,7 @@ import "../styles/trustees.css"
 
 const Trustees = () => {
   useEffect(() => {
-      document.title = "Trustees - Shri Siddheshwar Shiv Mandir";
+      document.title = "Trustees - Shri Sidheshwar Shiv Mandir";
     }, []);
   return (
     <div className="trustees-page">

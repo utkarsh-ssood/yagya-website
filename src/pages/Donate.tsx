@@ -9,7 +9,7 @@ interface UPI {
 }
 
 const upi: UPI = {
-  name: "Shri Siddheshwar Shiv Mandir Charitable Trust",
+  name: "Shri Sidheshwar Shiv Mandir Charitable Trust",
   id: "9464317490m@pnb",
   qr: new URL("../data/donate/qr/image.png", import.meta.url).href,
 };
@@ -47,7 +47,7 @@ const Donate = () => {
   };
 
   useEffect(() => {
-    document.title = "Donate - Shri Siddheshwar Shiv Mandir";
+    document.title = "Donate - Shri Sidheshwar Shiv Mandir";
   }, []);
 
   return (

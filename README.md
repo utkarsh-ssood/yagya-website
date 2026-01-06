@@ -1,6 +1,6 @@
 # Yagya Website
 
-This repository contains the source code for the **Yagya Website**, a React-based web application built with TypeScript and Vite. The website is designed to provide information about the **Shri Siddheshwar Shiv Mandir** and its activities, including the **1101 Kundiya Rudra Maha Yagya**.
+This repository contains the source code for the **Yagya Website**, a React-based web application built with TypeScript and Vite. The website is designed to provide information about the **Shri Sidheshwar Shiv Mandir** and its activities, including the **1101 Kundiya Rudra Maha Yagya**.
 
 ## Features
 

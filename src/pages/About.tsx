@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 const About = () => {
   useEffect(() => {
-    document.title = "About - Shri Siddheshwar Shiv Mandir";
+    document.title = "About - Shri Sidheshwar Shiv Mandir";
   }, []);
 
   return (
@@ -14,7 +14,7 @@ const About = () => {
       <section className="about-section">
         <h2>Who We Are</h2>
         <p>
-          Shri Siddheshwar Shiv Mandir Charitable Trust (Regd.), Bassi Gulam
+          Shri Sidheshwar Shiv Mandir Charitable Trust (Regd.), Bassi Gulam
           Hussain, Hoshiarpur, Punjab, is a spiritually driven and socially
           committed organization dedicated to the service of humanity through
           the principles of Sanatan Dharma. The Trust functions with the sacred
@@ -64,7 +64,7 @@ const About = () => {
         <p>
           In this spirit, Swami Udaigiri Ji Maharaj has taken a Bheeshan Sankalp
           to organize the <strong>1101 Kundiya Rudra Mahayagya</strong> from 19
-          February to 25 February 2026 at the Shri Siddheshwar Shiv Mandir
+          February to 25 February 2026 at the Shri Sidheshwar Shiv Mandir
           premises. The Mahayagya is being conducted solely for the welfare of
           all people (Sarv Kalyan), the well-being of the nation, and the
           establishment of peace across the world.

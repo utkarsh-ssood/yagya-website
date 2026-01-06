@@ -37,7 +37,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    document.title = "Shri Siddheshwar Shiv Mandir";
+    document.title = "Shri Sidheshwar Shiv Mandir";
     galleryImages.forEach(src => {
       const img = new Image()
       img.src = src
@@ -65,7 +65,7 @@ const Home = () => {
 
       {/* IMAGE + TEXT */}
       <section className="split">
-        <img src={galleryImages[2]} alt="Maha Yagya at Shri Siddheshwar Shiv Mandir" />
+        <img src={galleryImages[2]} alt="Maha Yagya at Shri Sidheshwar Shiv Mandir" />
         <div className="split-text">
           <h2>About the Maha Yagya</h2>
           <p>
@@ -109,13 +109,13 @@ const Home = () => {
       <section className="venue split-text">
         <h2 className="split-text">Venue</h2>
         <p>
-          Shri Siddheshwar Shiv Mandir<br />
+          Shri Sidheshwar Shiv Mandir<br />
           Bassi Gulam Hussain, Hoshiarpur, Punjab
         </p>
 
         <div className="map">
           <iframe
-            title="Shri Siddheshwar Shiv Mandir Location"
+            title="Shri Sidheshwar Shiv Mandir Location"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3400.011023023119!2d75.95012782576643!3d31.55131209561248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391ae25de6e46a11%3A0xa1e7d352098d0f07!2sBassi%20Gulam%20Hussain%2C%20Punjab%20146021!5e0!3m2!1sen!2sin!4v1767628855735!5m2!1sen!2sin"
             loading="lazy"
           />

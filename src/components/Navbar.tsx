@@ -96,7 +96,7 @@ const Navbar = () => {
           Register
         </Link>
         <Link
-          to="/contact"
+          to="/donate"
           className="donate-btn"
           onClick={() => setOpen(false)}
         >

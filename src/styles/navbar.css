@@ -25,6 +25,11 @@
   font-weight: 700;
   color: #2b2b2b;
   letter-spacing: 0.2px;
+  text-decoration: none;
+}
+
+.nav-brand:hover {
+  text-decoration: none;
 }
 
 /* ===============================
@@ -32,32 +37,33 @@
 ================================ */
 .nav-links {
   position: fixed;
-  top: 100%; /* start right below navbar */
+  top: 100%;
   right: -100%;
   width: 72%;
-  height: calc(100vh - 100%); /* full remaining height */
+  height: calc(100vh - 100%);
   background: #ffffff;
+
   padding: 2rem 1.6rem;
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
+
   transition: right 0.35s ease;
   box-shadow: -6px 0 24px rgba(0, 0, 0, 0.1);
 }
 
 .nav-links.open {
   right: 0;
-  
 }
 
 /* ===============================
    NAV LINKS
 ================================ */
 .nav-link {
-  text-decoration: none;
   font-size: 1.05rem;
   font-weight: 500;
   color: #333;
+  text-decoration: none;
 
   padding: 0.65rem 0.8rem;
   border-radius: 8px;
@@ -68,6 +74,7 @@
 .nav-link:hover {
   background: #fff4ea;
   color: #ff7a18;
+  text-decoration: none;
 }
 
 /* ===============================
@@ -82,30 +89,71 @@
 
   padding: 0.7rem 1rem;
   border-radius: 10px;
-
   font-weight: 600;
-  /* box-shadow: 0 6px 16px rgba(255, 122, 24, 0.35); */
+  text-decoration: none;
 }
 
 .donate-btn:hover {
   background: linear-gradient(135deg, #ff6a00, #ff8f35);
+  text-decoration: none;
 }
 
 /* ===============================
-   HAMBURGER
+   HAMBURGER BUTTON (CALM & CLEAN)
 ================================ */
-.hamburger {
-  font-size: 1.55rem;
+.hamburger-btn {
+  width: 46px;
+  height: 36px;
+  border-radius: 8px;
+
+  background: #fff7f0; /* soft temple tone */
+  border: 0.1px solid #ff7a18;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
   cursor: pointer;
-  color: #333;
-  line-height: 1;
+
+  transition: background 0.2s ease, transform 0.1s ease;
 }
 
+.hamburger-btn:hover {
+  background: #ffe8d6;
+}
+
+.hamburger-btn:active {
+  transform: scale(0.96);
+}
+
+/* Hamburger lines */
+.hamburger-btn span {
+  width: 20px;
+  height: 2.2px;
+  background: #ff7a18;
+  border-radius: 1px;
+  transition: all 0.3s ease;
+}
+
+/* OPEN STATE → X */
+.hamburger-btn.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-btn.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-btn.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
 /* ===============================
    DESKTOP NAV
 ================================ */
 @media (min-width: 768px) {
-  .hamburger {
+  .hamburger-btn {
     display: none;
   }
 

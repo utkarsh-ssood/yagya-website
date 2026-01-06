@@ -55,6 +55,9 @@ const Footer: React.FC = () => {
       <div className="footer-bottom">
         © {new Date().getFullYear()} Shri Sidheshwar Shiv Mandir Charitable Trust (Regd.). All rights reserved.
       </div>
+      <div className="footer-bottom">
+          <p>Designed By <a href="https://www.linkedin.com/in/utkarsh-sanjeev-sood-4606b8217/">Utkarsh Sanjeev Sood</a></p>
+      </div>
     </footer>
   );
 };

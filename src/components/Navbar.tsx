@@ -6,14 +6,14 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const scrollYRef = useRef(0);
   const navLinksRef = useRef<HTMLDivElement | null>(null);
-  const hamburgerRef = useRef<HTMLDivElement | null>(null);
+  const hamburgerRef = useRef<HTMLButtonElement | null>(null);
 
   // ==============================
   // Scroll lock + Escape key
   // ==============================
   useEffect(() => {
     if (open) {
-      scrollYRef.current = window.scrollY || window.pageYOffset || 0;
+      scrollYRef.current = window.scrollY || 0;
       document.body.style.position = "fixed";
       document.body.style.top = `-${scrollYRef.current}px`;
       document.body.style.left = "0";
@@ -53,10 +53,10 @@ const Navbar = () => {
     if (!open) return;
 
     const onPointerDown = (e: PointerEvent) => {
-      const target = e.target as Node | null;
-      if (!navLinksRef.current || !hamburgerRef.current) return;
-
+      const target = e.target as Node;
       if (
+        navLinksRef.current &&
+        hamburgerRef.current &&
         !navLinksRef.current.contains(target) &&
         !hamburgerRef.current.contains(target)
       ) {
@@ -76,9 +76,8 @@ const Navbar = () => {
         className="nav-brand"
         onClick={() => setOpen(false)}
         aria-label="Go to Home"
-        style={{ textDecoration: "none" }}
       >
-        Shri Sidheshwar Shiv Mandir Charitable Trust (Regd.)
+        Shri Siddheshwar Shiv Mandir Charitable Trust (Regd.)
       </Link>
 
       {/* Links */}
@@ -105,15 +104,17 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* Hamburger */}
-      <div
+      {/* High-visibility Hamburger */}
+      <button
         ref={hamburgerRef}
-        className="hamburger"
+        className={`hamburger-btn ${open ? "open" : ""}`}
         onClick={() => setOpen(prev => !prev)}
         aria-label="Toggle navigation menu"
       >
-        ☰
-      </div>
+        <span />
+        <span />
+        <span />
+      </button>
     </nav>
   );
 };

@@ -16,8 +16,9 @@
   text-align: center;
   font-size: clamp(28px, 5vw, 40px);
   font-weight: 700;
-  color: #222;
-  margin-bottom: 2.8rem;
+  color: var(--secondary);
+  margin-bottom: 36px;
+  position: relative;
 }
 
 .donate-page h1::after {
@@ -54,6 +55,34 @@
 /* ===============================
    UPI HIGHLIGHT SECTION
 ================================ */
+
+.upi-section h2{
+  /* font-size: 20px; */
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 14px;
+  line-height: 1.3;
+}
+
+.guidelines-section h2{
+  /* font-size: 20px; */
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 14px;
+  line-height: 1.3;
+}
+
+.guidelines-section h3{
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.8rem;
+}
+
 
 .upi-highlight {
   display: flex;

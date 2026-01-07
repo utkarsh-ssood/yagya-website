@@ -38,12 +38,13 @@ const Donate = () => {
   const handleUPIClick = () => {
     if (!isMobile) return;
 
-    const upiLink = `upi://pay?pa=${encodeURIComponent(
-      upi.id
-    )}&pn=${encodeURIComponent(upi.name)}&cu=INR`;
+    const intentUrl =
+      `intent://pay?pa=${encodeURIComponent(upi.id)}` +
+      `&pn=${encodeURIComponent(upi.name)}` +
+      `&cu=INR` +
+      `#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end`;
 
-    console.log("DEBUG: Opening UPI link:", upiLink);
-    window.location.href = upiLink;
+    window.location.href = intentUrl;
   };
 
   useEffect(() => {

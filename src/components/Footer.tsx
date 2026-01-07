@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
         {/* Right: Socials */}
         <div className="footer-socials">
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/shri_sidheshwardham/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"

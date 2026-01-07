@@ -42,8 +42,9 @@ const Donate = () => {
       `intent://pay?pa=${encodeURIComponent(upi.id)}` +
       `&pn=${encodeURIComponent(upi.name)}` +
       `&cu=INR` +
-      `#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end`;
+      `#Intent;scheme=upi;end`;
 
+    
     window.location.href = intentUrl;
   };
 

@@ -38,14 +38,15 @@ const Donate = () => {
   const handleUPIClick = () => {
     if (!isMobile) return;
 
-    const intentUrl =
-      `intent://pay?pa=${encodeURIComponent(upi.id)}` +
-      `&pn=${encodeURIComponent(upi.name)}` +
-      `&cu=INR` +
-      `#Intent;scheme=upi;end`;
+    // Use the standard upi:// scheme for better compatibility
+    const upiUrl = `upi://pay?pa=${encodeURIComponent(upi.id)}&pn=${encodeURIComponent(upi.name)}&cu=INR`;
 
-    
-    window.location.href = intentUrl;
+    try {
+      window.location.href = upiUrl;
+    } catch (error) {
+      console.error("Could not open UPI app:", error);
+      alert("Could not open UPI apps automatically. Please copy the UPI ID and use your preferred app.");
+    }
   };
 
   useEffect(() => {

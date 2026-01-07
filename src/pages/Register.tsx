@@ -5,20 +5,21 @@ import "../styles/global.css";
 import "../styles/register.css";
 
 const daysList = [
-  "19 Feb 2026",
-  "20 Feb 2026",
-  "21 Feb 2026",
-  "22 Feb 2026",
-  "23 Feb 2026",
-  "24 Feb 2026",
-  "25 Feb 2026",
+  "19 Feb 2026 (Thursday)",
+  "20 Feb 2026 (Friday)",
+  "21 Feb 2026 (Saturday)",
+  "22 Feb 2026 (Sunday)",
+  "23 Feb 2026 (Monday)",
+  "24 Feb 2026 (Tuesday)",
+  "25 Feb 2026 (Wednesday)",
 ];
 
 const registerSchema = z.object({
   name: z.string().min(1, "Full Name is required"),
-  phone: z
-    .string()
-    .regex(/^\d{10}$/, "Primary Phone must be 10 digits"),
+  gender: z.string().min(1, "Please select gender"),
+
+  phone: z.string().regex(/^\d{10}$/, "Primary Phone must be 10 digits"),
+
   altPhone: z
     .string()
     .optional()
@@ -26,7 +27,6 @@ const registerSchema = z.object({
       message: "Alternate Phone must be 10 digits",
     }),
 
-  // ✅ FIX: email optional but validates only if provided
   email: z.preprocess(
     (val) => (val === "" ? undefined : val),
     z.string().email({ message: "Invalid email" }).optional()
@@ -45,21 +45,35 @@ type RegisterForm = z.infer<typeof registerSchema>;
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
+
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
+
+  const [genderOpen, setGenderOpen] = useState(false);
+  const [gender, setGender] = useState("");
+
   const [accommodationOpen, setAccommodationOpen] = useState(false);
   const [accommodation, setAccommodation] = useState("");
+
   const [errors, setErrors] = useState<
     Partial<Record<keyof RegisterForm, string>>
   >({});
 
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const genderRef = useRef<HTMLDivElement>(null);
+  const accommodationRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
+        genderRef.current &&
+        !genderRef.current.contains(event.target as Node)
+      ) {
+        setGenderOpen(false);
+      }
+
+      if (
+        accommodationRef.current &&
+        !accommodationRef.current.contains(event.target as Node)
       ) {
         setAccommodationOpen(false);
       }
@@ -75,17 +89,14 @@ const Register = () => {
     );
   };
 
-  const selectAccommodation = (value: string) => {
-    setAccommodation(value);
-    setAccommodationOpen(false);
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
+
     const data: RegisterForm = {
       name: formData.get("name")?.toString() || "",
+      gender,
       phone: formData.get("phone")?.toString() || "",
       altPhone: formData.get("altPhone")?.toString() || "",
       email: formData.get("email")?.toString() || "",
@@ -110,17 +121,14 @@ const Register = () => {
     setErrors({});
     setLoading(true);
 
-    const emailData = {
-      ...data,
-      days: selectedDays.join(", "),
-      accommodation,
-    };
-
     try {
       const response = await emailjs.send(
         "service_cmna36u",
         "template_kt7n008",
-        emailData,
+        {
+          ...data,
+          days: selectedDays.join(", "),
+        },
         "xHoA1HJku-Gsa-55w"
       );
 
@@ -129,11 +137,12 @@ const Register = () => {
         formRef.current?.reset();
         setSelectedDays([]);
         setAccommodation("");
+        setGender("");
       } else {
         alert("Submission failed ❌");
       }
     } catch (error) {
-      console.error("DEBUG: EmailJS ERROR", error);
+      console.error(error);
       alert("Submission failed ❌");
     } finally {
       setLoading(false);
@@ -151,6 +160,33 @@ const Register = () => {
       <form className="form" onSubmit={handleSubmit} ref={formRef}>
         <input name="name" placeholder="Full Name *" />
         {errors.name && <span className="error">{errors.name}</span>}
+
+        {/* GENDER DROPDOWN */}
+        <label>Gender *</label>
+        {errors.gender && <span className="error">{errors.gender}</span>}
+        <div
+          className={`custom-dropdown ${genderOpen ? "open" : ""}`}
+          ref={genderRef}
+          onClick={() => setGenderOpen((prev) => !prev)}
+        >
+          <span className="selected">{gender || "Select Gender"}</span>
+          <span className="arrow">▼</span>
+          <div className="options">
+            {["Male", "Female", "Other"].map((opt) => (
+              <div
+                key={opt}
+                className="option"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setGender(opt);
+                  setGenderOpen(false);
+                }}
+              >
+                {opt}
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className="phone-fields">
           <div className="phone-field">
@@ -186,7 +222,7 @@ const Register = () => {
 
         <div
           className={`custom-dropdown ${accommodationOpen ? "open" : ""}`}
-          ref={dropdownRef}
+          ref={accommodationRef}
           onClick={() => setAccommodationOpen((prev) => !prev)}
         >
           <span className="selected">
@@ -200,7 +236,8 @@ const Register = () => {
                 className="option"
                 onClick={(e) => {
                   e.stopPropagation();
-                  selectAccommodation(opt);
+                  setAccommodation(opt);
+                  setAccommodationOpen(false);
                 }}
               >
                 {opt}

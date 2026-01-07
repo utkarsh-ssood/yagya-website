@@ -77,7 +77,7 @@ const Navbar = () => {
         onClick={() => setOpen(false)}
         aria-label="Go to Home"
       >
-        Shri Siddheshwar Shiv Mandir Charitable Trust (Regd.)
+        Shri Sidheshwar Shiv Mandir Charitable Trust (Regd.)
       </Link>
 
       {/* Links */}

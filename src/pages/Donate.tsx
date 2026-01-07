@@ -16,14 +16,19 @@ const upi: UPI = {
 
 const Donate = () => {
   const [copied, setCopied] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [platform, setPlatform] = useState<"android" | "ios" | "other">("other");
 
-  // Detect mobile device
+  // Platform detection
   useEffect(() => {
-    const mobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(
-      navigator.userAgent
-    );
-    setIsMobile(mobile);
+    const ua = navigator.userAgent;
+
+    if (/Android/i.test(ua)) {
+      setPlatform("android");
+    } else if (/iPhone|iPad|iPod/i.test(ua)) {
+      setPlatform("ios");
+    } else {
+      setPlatform("other");
+    }
   }, []);
 
   const handleCopy = () => {
@@ -34,23 +39,24 @@ const Donate = () => {
   };
 
   /**
-   * OPTION 2 — MINIMAL SAFE UPI INTENT
-   * This mimics manual UPI ID entry and avoids merchant validation failures.
+   * ANDROID ONLY — System App Chooser
+   * iOS intentionally does NOTHING
    */
   const handleUPIClick = () => {
-    if (!isMobile) return;
+    if (platform !== "android") return;
 
-    const upiUrl =
-      `upi://pay?pa=${encodeURIComponent(upi.id)}` +
+    const intentUrl =
+      `intent://pay?pa=${encodeURIComponent(upi.id)}` +
       `&pn=${encodeURIComponent(upi.name)}` +
-      `&cu=INR`;
+      `&cu=INR#Intent;scheme=upi;end`;
 
-    window.location.href = upiUrl;
+    window.location.href = intentUrl;
   };
 
-  useEffect(() => {
-    document.title = "Donate - Shri Sidheshwar Shiv Mandir";
-  }, []);
+  const instructionText =
+    platform === "android"
+      ? "Tap to open UPI app"
+      : "Scan using any UPI app";
 
   return (
     <div className="donate-page">
@@ -60,20 +66,19 @@ const Donate = () => {
           UPI PAYMENT HIGHLIGHT
       ================================ */}
       <section className="upi-section">
-        <h2>UPI Payment</h2>
+        <h2>UPI Donation</h2>
 
         <div className="upi-highlight">
           {/* QR / Tap area */}
           <div
-            className={`upi-qr ${isMobile ? "clickable" : ""}`}
+            className={`upi-qr ${
+              platform === "android" ? "clickable" : ""
+            }`}
             onClick={handleUPIClick}
-            role={isMobile ? "button" : undefined}
-            tabIndex={isMobile ? 0 : -1}
+            role={platform === "android" ? "button" : undefined}
           >
             <img src={upi.qr} alt="UPI QR Code" />
-            <span>
-              {isMobile ? "Tap to open UPI app" : "Scan to Donate"}
-            </span>
+            <span>{instructionText}</span>
           </div>
 
           <div className="upi-info">
@@ -110,6 +115,13 @@ const Donate = () => {
             <span className={`copied ${copied ? "show" : ""}`}>
               Copied to Clipboard!
             </span>
+
+            {platform === "ios" && (
+              <p className="upi-hint">
+                iPhone users: Please scan the QR code using Paytm, GPay,
+                PhonePe, or any UPI-enabled app.
+              </p>
+            )}
           </div>
         </div>
       </section>

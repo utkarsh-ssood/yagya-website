@@ -34,29 +34,17 @@ const Donate = () => {
   };
 
   /**
-   * IMPROVED UPI CLICK HANDLER
-   * Includes Transaction Reference (tr) and Merchant Code (mc)
-   * to prevent "Something went wrong" errors in apps like WhatsApp/GPay.
+   * OPTION 2 — MINIMAL SAFE UPI INTENT
+   * This mimics manual UPI ID entry and avoids merchant validation failures.
    */
   const handleUPIClick = () => {
     if (!isMobile) return;
 
-    // Generate a unique transaction reference (required by many merchant banks)
-    const transactionRef = `TRST${Date.now()}`;
-    
-    // 8398 is the standard Merchant Category Code for Charitable/Social Service Orgs.
-    // If this fails, '0000' is the generic fallback.
-    const merchantCode = "8398"; 
-
-    const upiUrl = 
+    const upiUrl =
       `upi://pay?pa=${encodeURIComponent(upi.id)}` +
       `&pn=${encodeURIComponent(upi.name)}` +
-      `&tr=${transactionRef}` +
-      `&mc=${merchantCode}` +
-      `&cu=INR` +
-      `&tn=${encodeURIComponent("Donation to Trust")}`;
+      `&cu=INR`;
 
-    // Attempt to open the UPI intent
     window.location.href = upiUrl;
   };
 

@@ -25,14 +25,18 @@ const registerSchema = z.object({
     .refine((val) => !val || /^\d{10}$/.test(val), {
       message: "Alternate Phone must be 10 digits",
     }),
-  email: z.string().email({ message: "Invalid email" }).optional(),
+
+  // ✅ FIX: email optional but validates only if provided
+  email: z.preprocess(
+    (val) => (val === "" ? undefined : val),
+    z.string().email({ message: "Invalid email" }).optional()
+  ),
+
   persons: z
     .string()
     .regex(/^[1-9]\d*$/, "Number of persons is required"),
   address: z.string().min(1, "Address is required"),
-  days: z
-    .array(z.string())
-    .min(1, "Please select at least one day"),
+  days: z.array(z.string()).min(1, "Please select at least one day"),
   accommodation: z.string().min(1, "Select accommodation"),
   remarks: z.string().optional(),
 });
@@ -44,19 +48,25 @@ const Register = () => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [accommodationOpen, setAccommodationOpen] = useState(false);
   const [accommodation, setAccommodation] = useState("");
-  const [errors, setErrors] = useState<Partial<Record<keyof RegisterForm, string>>>({});
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof RegisterForm, string>>
+  >({});
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setAccommodationOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const toggleDay = (day: string) => {
@@ -116,8 +126,6 @@ const Register = () => {
 
       if (response.status === 200) {
         alert("Registration submitted successfully ✅");
-
-        // ✅ Reset the form safely using formRef
         formRef.current?.reset();
         setSelectedDays([]);
         setAccommodation("");
@@ -133,8 +141,9 @@ const Register = () => {
   };
 
   useEffect(() => {
-    document.title = "Register - Shri Sidheshwar Shiv Mandir";
+    document.title = "Register - Shri Siddheshwar Shiv Mandir";
   }, []);
+
   return (
     <div className="page">
       <h1>Rudra Maha Yagya Registration</h1>
@@ -150,7 +159,9 @@ const Register = () => {
           </div>
           <div className="phone-field">
             <input name="altPhone" placeholder="Alternate Phone (Optional)" />
-            {errors.altPhone && <span className="error">{errors.altPhone}</span>}
+            {errors.altPhone && (
+              <span className="error">{errors.altPhone}</span>
+            )}
           </div>
         </div>
 
@@ -169,13 +180,18 @@ const Register = () => {
         {errors.address && <span className="error">{errors.address}</span>}
 
         <label>Accommodation Required *</label>
-        {errors.accommodation && <span className="error">{errors.accommodation}</span>}
+        {errors.accommodation && (
+          <span className="error">{errors.accommodation}</span>
+        )}
+
         <div
           className={`custom-dropdown ${accommodationOpen ? "open" : ""}`}
           ref={dropdownRef}
           onClick={() => setAccommodationOpen((prev) => !prev)}
         >
-          <span className="selected">{accommodation || "Select Accommodation"}</span>
+          <span className="selected">
+            {accommodation || "Select Accommodation"}
+          </span>
           <span className="arrow">▼</span>
           <div className="options">
             {["Yes", "No"].map((opt) => (

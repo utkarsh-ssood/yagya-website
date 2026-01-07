@@ -20,10 +20,9 @@ const Donate = () => {
 
   // Detect mobile device
   useEffect(() => {
-    const mobile =
-      /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(
-        navigator.userAgent
-      );
+    const mobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(
+      navigator.userAgent
+    );
     setIsMobile(mobile);
   }, []);
 
@@ -34,19 +33,31 @@ const Donate = () => {
     });
   };
 
-  // Open UPI app only on mobile
+  /**
+   * IMPROVED UPI CLICK HANDLER
+   * Includes Transaction Reference (tr) and Merchant Code (mc)
+   * to prevent "Something went wrong" errors in apps like WhatsApp/GPay.
+   */
   const handleUPIClick = () => {
     if (!isMobile) return;
 
-    // Use the standard upi:// scheme for better compatibility
-    const upiUrl = `upi://pay?pa=${encodeURIComponent(upi.id)}&pn=${encodeURIComponent(upi.name)}&cu=INR`;
+    // Generate a unique transaction reference (required by many merchant banks)
+    const transactionRef = `TRST${Date.now()}`;
+    
+    // 8398 is the standard Merchant Category Code for Charitable/Social Service Orgs.
+    // If this fails, '0000' is the generic fallback.
+    const merchantCode = "8398"; 
 
-    try {
-      window.location.href = upiUrl;
-    } catch (error) {
-      console.error("Could not open UPI app:", error);
-      alert("Could not open UPI apps automatically. Please copy the UPI ID and use your preferred app.");
-    }
+    const upiUrl = 
+      `upi://pay?pa=${encodeURIComponent(upi.id)}` +
+      `&pn=${encodeURIComponent(upi.name)}` +
+      `&tr=${transactionRef}` +
+      `&mc=${merchantCode}` +
+      `&cu=INR` +
+      `&tn=${encodeURIComponent("Donation to Trust")}`;
+
+    // Attempt to open the UPI intent
+    window.location.href = upiUrl;
   };
 
   useEffect(() => {

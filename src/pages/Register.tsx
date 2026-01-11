@@ -4,6 +4,11 @@ import { z } from "zod";
 import "../styles/global.css";
 import "../styles/register.css";
 
+/* -------------------- CONSTANTS -------------------- */
+
+const SHEET_API_URL =
+  "https://script.google.com/macros/s/AKfycbyZVhEjo3Fi9LwcfiqCjx2dLFMAvtrQbhZqxZZ9x0fOpcp7TMk1yhbxEdBNpKh6c-WBNA/exec";
+
 const daysList = [
   "19 Feb 2026 (Thursday)",
   "20 Feb 2026 (Friday)",
@@ -14,27 +19,23 @@ const daysList = [
   "25 Feb 2026 (Wednesday)",
 ];
 
+/* -------------------- VALIDATION -------------------- */
+
 const registerSchema = z.object({
   name: z.string().min(1, "Full Name is required"),
   gender: z.string().min(1, "Please select gender"),
-
   phone: z.string().regex(/^\d{10}$/, "Primary Phone must be 10 digits"),
-
   altPhone: z
     .string()
     .optional()
     .refine((val) => !val || /^\d{10}$/.test(val), {
       message: "Alternate Phone must be 10 digits",
     }),
-
   email: z.preprocess(
     (val) => (val === "" ? undefined : val),
     z.string().email({ message: "Invalid email" }).optional()
   ),
-
-  persons: z
-    .string()
-    .regex(/^[1-9]\d*$/, "Number of persons is required"),
+  persons: z.string().regex(/^[1-9]\d*$/, "Number of persons is required"),
   address: z.string().min(1, "Address is required"),
   days: z.array(z.string()).min(1, "Please select at least one day"),
   accommodation: z.string().min(1, "Select accommodation"),
@@ -43,17 +44,15 @@ const registerSchema = z.object({
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
+/* -------------------- COMPONENT -------------------- */
+
 const Register = () => {
   const [loading, setLoading] = useState(false);
-
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
-
   const [genderOpen, setGenderOpen] = useState(false);
   const [gender, setGender] = useState("");
-
   const [accommodationOpen, setAccommodationOpen] = useState(false);
   const [accommodation, setAccommodation] = useState("");
-
   const [errors, setErrors] = useState<
     Partial<Record<keyof RegisterForm, string>>
   >({});
@@ -62,18 +61,16 @@ const Register = () => {
   const accommodationRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
+  /* -------------------- EFFECTS -------------------- */
+
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        genderRef.current &&
-        !genderRef.current.contains(event.target as Node)
-      ) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (genderRef.current && !genderRef.current.contains(e.target as Node)) {
         setGenderOpen(false);
       }
-
       if (
         accommodationRef.current &&
-        !accommodationRef.current.contains(event.target as Node)
+        !accommodationRef.current.contains(e.target as Node)
       ) {
         setAccommodationOpen(false);
       }
@@ -83,11 +80,33 @@ const Register = () => {
       document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    document.title = "Register - Shri Sidheshwar Shiv Mandir";
+  }, []);
+
+  /* -------------------- HELPERS -------------------- */
+
   const toggleDay = (day: string) => {
     setSelectedDays((prev) =>
       prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
     );
   };
+
+  const submitToSheet = async (data: RegisterForm) => {
+  await fetch(SHEET_API_URL, {
+    method: "POST",
+    mode: "no-cors", // ✅ THIS FIXES EVERYTHING
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ...data,
+      days: data.days.join(", "),
+    }),
+  });
+};
+
+  /* -------------------- SUBMIT -------------------- */
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -111,8 +130,7 @@ const Register = () => {
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof RegisterForm, string>> = {};
       result.error.issues.forEach((issue) => {
-        const field = issue.path[0] as keyof RegisterForm;
-        fieldErrors[field] = issue.message;
+        fieldErrors[issue.path[0] as keyof RegisterForm] = issue.message;
       });
       setErrors(fieldErrors);
       return;
@@ -122,7 +140,11 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const response = await emailjs.send(
+      /* 1️⃣ Save to Google Sheet */
+      await submitToSheet(data);
+
+      /* 2️⃣ Send Email */
+      await emailjs.send(
         "service_cmna36u",
         "template_kt7n008",
         {
@@ -132,26 +154,20 @@ const Register = () => {
         "xHoA1HJku-Gsa-55w"
       );
 
-      if (response.status === 200) {
-        alert("Registration submitted successfully ✅");
-        formRef.current?.reset();
-        setSelectedDays([]);
-        setAccommodation("");
-        setGender("");
-      } else {
-        alert("Submission failed ❌");
-      }
-    } catch (error) {
-      console.error(error);
+      alert("Registration submitted successfully ✅");
+      formRef.current?.reset();
+      setSelectedDays([]);
+      setGender("");
+      setAccommodation("");
+    } catch (err) {
+      console.error(err);
       alert("Submission failed ❌");
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    document.title = "Register - Shri Sidheshwar Shiv Mandir";
-  }, []);
+  /* -------------------- JSX -------------------- */
 
   return (
     <div className="page">
@@ -161,13 +177,12 @@ const Register = () => {
         <input name="name" placeholder="Full Name *" />
         {errors.name && <span className="error">{errors.name}</span>}
 
-        {/* GENDER DROPDOWN */}
         <label>Gender *</label>
         {errors.gender && <span className="error">{errors.gender}</span>}
         <div
           className={`custom-dropdown ${genderOpen ? "open" : ""}`}
           ref={genderRef}
-          onClick={() => setGenderOpen((prev) => !prev)}
+          onClick={() => setGenderOpen((p) => !p)}
         >
           <span className="selected">{gender || "Select Gender"}</span>
           <span className="arrow">▼</span>
@@ -219,11 +234,10 @@ const Register = () => {
         {errors.accommodation && (
           <span className="error">{errors.accommodation}</span>
         )}
-
         <div
           className={`custom-dropdown ${accommodationOpen ? "open" : ""}`}
           ref={accommodationRef}
-          onClick={() => setAccommodationOpen((prev) => !prev)}
+          onClick={() => setAccommodationOpen((p) => !p)}
         >
           <span className="selected">
             {accommodation || "Select Accommodation"}

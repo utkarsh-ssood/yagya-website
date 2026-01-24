@@ -93,18 +93,18 @@ const Register = () => {
   };
 
   const submitToSheet = async (data: RegisterForm) => {
-  await fetch(SHEET_API_URL, {
-    method: "POST",
-    mode: "no-cors", // ✅ THIS FIXES EVERYTHING
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      ...data,
-      days: data.days.join(", "),
-    }),
-  });
-};
+    await fetch(SHEET_API_URL, {
+      method: "POST",
+      mode: "no-cors", // Google Apps Script compatibility
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...data,
+        days: data.days.join(", "),
+      }),
+    });
+  };
 
   /* -------------------- SUBMIT -------------------- */
 
@@ -140,28 +140,40 @@ const Register = () => {
     setLoading(true);
 
     try {
-      /* 1️⃣ Save to Google Sheet */
+      /* 1️⃣ SAVE TO GOOGLE SHEETS (CRITICAL) */
       await submitToSheet(data);
 
-      /* 2️⃣ Send Email */
-      await emailjs.send(
-        "service_cmna36u",
-        "template_kt7n008",
-        {
-          ...data,
-          days: selectedDays.join(", "),
-        },
-        "xHoA1HJku-Gsa-55w"
-      );
+      /* 2️⃣ EMAIL (NON-CRITICAL) */
+      try {
+        await emailjs.send(
+          "service_cmna36u",
+          "template_kt7n008",
+          {
+            ...data,
+            days: selectedDays.join(", "),
+          },
+          "xHoA1HJku-Gsa-55w"
+        );
+      } catch (emailErr) {
+        // 🧾 Silent fallback logging
+        console.warn("EmailJS failed, quota likely exceeded:", emailErr);
+        console.log({
+          type: "EMAIL_FAILED",
+          timestamp: new Date().toISOString(),
+          payload: data,
+        });
+      }
 
       alert("Registration submitted successfully ✅");
+
       formRef.current?.reset();
       setSelectedDays([]);
       setGender("");
       setAccommodation("");
-    } catch (err) {
-      console.error(err);
-      alert("Submission failed ❌");
+
+    } catch (sheetErr) {
+      console.error("Google Sheet submission failed:", sheetErr);
+      alert("Submission failed ❌ Please try again.");
     } finally {
       setLoading(false);
     }

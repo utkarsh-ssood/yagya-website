@@ -13,7 +13,6 @@ const daysList = [
   "19 Feb 2026 (Thursday)",
   "20 Feb 2026 (Friday)",
   "21 Feb 2026 (Saturday)",
-  "22 Feb 2026 (Sunday)",
   "23 Feb 2026 (Monday)",
   "24 Feb 2026 (Tuesday)",
   "25 Feb 2026 (Wednesday)",

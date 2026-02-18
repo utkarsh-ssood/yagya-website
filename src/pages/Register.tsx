@@ -10,8 +10,6 @@ const SHEET_API_URL =
   "https://script.google.com/macros/s/AKfycbyZVhEjo3Fi9LwcfiqCjx2dLFMAvtrQbhZqxZZ9x0fOpcp7TMk1yhbxEdBNpKh6c-WBNA/exec";
 
 const daysList = [
-  "19 Feb 2026 (Thursday)",
-  "20 Feb 2026 (Friday)",
   "21 Feb 2026 (Saturday)",  
   "22 Feb 2026 (Sunday)",
   "23 Feb 2026 (Monday)",
